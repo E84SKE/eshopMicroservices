@@ -1,6 +1,30 @@
+version: "3.9"
+
 services:
   catalogdb:
-    image: postgres
+    image: postgres:16
+    container_name: catalogdb
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: catalogdb
+    ports:
+      - "9876:9876"   # host:container (ora usi 5433 dall'host)
+    volumes:
+      - postgres_catalog:/var/lib/postgresql/data
+
+  catalog.api:
+    build: Services/Catalog/Catalog.API
+    container_name: catalog_api
+    depends_on:
+      - catalogdb
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: Host=catalogdb;Port=9876;Database=catalogdb;Username=admin;Password=admin123;Include Error Detail=true
+    ports:
+      - "8000:8080"
+    restart: always
 
 volumes:
-  postgres_catalogdb:
+  postgres_catalog:
