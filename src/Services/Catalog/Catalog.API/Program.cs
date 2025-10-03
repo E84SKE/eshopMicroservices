@@ -8,7 +8,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 if (string.IsNullOrWhiteSpace(connectionString))
 {
     // fallback sicuro: se manca, prova comunque su catalogdb:5432 (docker)
-    connectionString = "Host=catalogdb;Port=5432;Database=catalogdb;Username=postgres;Password=postgres";
+    connectionString = "Host=catalogdb;Port=15432;Database=catalogdb;Username=postgres;Password=postgres";
 }
 Console.WriteLine($"[INFO] Using connection string: {connectionString}");
 

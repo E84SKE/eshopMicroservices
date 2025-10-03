@@ -23,7 +23,7 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       
       # Connection string per quando l'API gira in Docker
-      ConnectionStrings__DefaultConnection: Host=catalogdb;Port=5432;Database=catalogdb;Username=postgres;Password=postgres
+      ConnectionStrings__DefaultConnection: Host=catalogdb;Port=15432;Database=catalogdb;Username=postgres;Password=postgres
       
       #  Connection string alternativa per debug locale (Visual Studio su Windows)
       # Usa questa variabile solo in launchSettings.json o user-secrets
