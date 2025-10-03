@@ -21,7 +21,7 @@ services:
       - catalogdb
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__DefaultConnection: Host=catalogdb;Port=9876;Database=catalogdb;Username=admin;Password=admin123;Include Error Detail=true
+      ConnectionStrings__DefaultConnection: "Host=localhost;Port=9876;Database=catalogdb;Username=postgres;Password=postgres;Trust Server Certificate=true;Ssl Mode=Require;"
     ports:
       - "8000:8080"
     restart: always
