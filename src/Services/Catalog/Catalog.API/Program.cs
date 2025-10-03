@@ -3,6 +3,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // services 
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    // fallback sicuro: se manca, prova comunque su catalogdb:5432 (docker)
+    connectionString = "Host=catalogdb;Port=5432;Database=catalogdb;Username=postgres;Password=postgres";
+}
+Console.WriteLine($"[INFO] Using connection string: {connectionString}");
+
+
+
 
 builder.Services.AddCarter();
 builder.Services.AddMediatR(config =>
@@ -10,9 +21,12 @@ builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
-builder.Services.AddMarten(opts =>
+// Configura Marten
+builder.Services.AddMarten(options =>
 {
-    opts.Connection(builder.Configuration.GetConnectionString("Database")!);
+    options.Connection(connectionString);
+    // opzionale: crea automaticamente schema se mancano tabelle
+
 }).UseLightweightSessions();
 
 var app = builder.Build();
@@ -24,3 +38,5 @@ app.MapCarter();
 
 
 app.Run();
+
+

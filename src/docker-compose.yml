@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: catalogdb
     ports:
-      - "9876:9876"   # host:container (ora usi 5433 dall'host)
+      - "9876:5432"
     volumes:
       - postgres_catalog:/var/lib/postgresql/data
 
@@ -21,7 +21,14 @@ services:
       - catalogdb
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__DefaultConnection: "Host=localhost;Port=9876;Database=catalogdb;Username=postgres;Password=postgres;Trust Server Certificate=true;Ssl Mode=Require;"
+      
+      # Connection string per quando l'API gira in Docker
+      ConnectionStrings__DefaultConnection: Host=catalogdb;Port=5432;Database=catalogdb;Username=postgres;Password=postgres
+      
+      #  Connection string alternativa per debug locale (Visual Studio su Windows)
+      # Usa questa variabile solo in launchSettings.json o user-secrets
+      ConnectionStrings__LocalConnection: Host=localhost;Port=9876;Database=catalogdb;Username=postgres;Password=postgres
+
     ports:
       - "8000:8080"
     restart: always

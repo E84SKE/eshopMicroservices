@@ -12,9 +12,6 @@
             //Business logic to create a product
 
 
-
-
-
             //1 create product entity from command object 
 
 

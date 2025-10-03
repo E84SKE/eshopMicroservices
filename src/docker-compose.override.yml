@@ -1,1 +1,5 @@
-
+services:
+  catalog.api:
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: Host=catalogdb;Port=5432;Database=catalogdb;Username=postgres;Password=postgres
